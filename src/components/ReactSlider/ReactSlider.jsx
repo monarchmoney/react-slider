@@ -316,6 +316,15 @@ class ReactSlider extends React.Component {
          * - `props` {`object`} props to be spread into your track node
          */
         renderMark: PropTypes.func,
+
+        /**
+         * Provide a custom render function for the track container.
+         * The render function will be passed one argument,
+         * an object containg the children that should be rendered inside the container.
+         *
+         *      ({ children }) => <div>{children}</div>
+         */
+        renderTrackContainer: PropTypes.func,
     };
 
     static defaultProps = {
@@ -340,6 +349,7 @@ class ReactSlider extends React.Component {
         renderThumb: props => <div {...props} />,
         renderTrack: props => <div {...props} />,
         renderMark: props => <span {...props} />,
+        renderTrackContainer: ({ children }) => children,
     };
 
     constructor(props) {
@@ -1104,7 +1114,7 @@ class ReactSlider extends React.Component {
                 onMouseDown: this.onSliderMouseDown,
                 onClick: this.onSliderClick,
             },
-            tracks,
+            this.props.renderTrackContainer({ children: tracks }),
             thumbs,
             marks
         );
